@@ -6,6 +6,8 @@
 4.制冷热模式<br/>
 5.室内温度显示<br/>
 
-![图片文字](./snapshot/device-2020-09-18-122159.png)
+<img src="snapshot/device-2020-09-18-122159.png"  width="300" height="50%" alt="![图片文字](./snapshot/device-2020-09-18-122159.png)" />
+
+
 
 
