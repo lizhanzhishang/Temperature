@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TemperatureView">
+        <attr name="pic_flg" format="integer" />
+        <attr name="low_color" format="integer|color|reference" />
+        <attr name="high_color" format="integer|color|reference" />
+    </declare-styleable>
+
+</resources>

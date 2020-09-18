@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!" />
+
+
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:text="+"
+                android:onClick="onAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </Button>
+            <Button
+                android:text="-"
+                android:onClick="onSub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </Button>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:text="低风"
+                android:onClick="on1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </Button>
+            <Button
+                android:text="中风"
+                android:onClick="on2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </Button>
+            <Button
+                android:text="强风"
+                android:onClick="on3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </Button>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:text="制冷"
+                android:onClick="onZhileng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </Button>
+            <Button
+                android:text="制热"
+                android:onClick="onZhiRe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </Button>
+            <Button
+                android:text="送风"
+                android:onClick="onFeng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </Button>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <com.example.plicationjava.TemperatureView
+        android:id="@+id/temperatureview"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:padding="36dp"
+        >
+    </com.example.plicationjava.TemperatureView>
+
+<!--              分割线                         -->
+
+
+
+
+    <com.example.plicationjava.TemperatureView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:padding="10dp"
+        >
+    </com.example.plicationjava.TemperatureView>
+
+    <com.example.plicationjava.TemperatureView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:padding="15dp"
+        >
+    </com.example.plicationjava.TemperatureView>
+
+    <com.example.plicationjava.TemperatureView
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:padding="21dp"
+        >
+    </com.example.plicationjava.TemperatureView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>
+</ScrollView>
