@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -19,9 +18,8 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import static android.util.TypedValue.COMPLEX_UNIT_DIP;
-import static android.util.TypedValue.COMPLEX_UNIT_SP;
 
-public class TemperatureView extends View {
+public class TemperatureNCView extends View {
 
     private int mLowColor = Color.parseColor("#444444");
     private int mHightColor = Color.parseColor("#20BF70");
@@ -31,17 +29,17 @@ public class TemperatureView extends View {
     private float mCircleBigWidth=0;
     private float mCircleBig=2;
 
-    public String mTemperatAir="16.0°C";
+    public String mTemperatAir="低风";
     public float  mAirTp=16.0f;
     public String mTemperatHourse="室内:28.5°C";
     private int mTemperatAirCircle=1;// 16- 32
 
 
-    public TemperatureView(Context context) {
+    public TemperatureNCView(Context context) {
         super(context);
     }
 
-    public TemperatureView(Context context, @Nullable AttributeSet attrs) {
+    public TemperatureNCView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedarray = context.obtainStyledAttributes(attrs, R.styleable.TemperatureView);
         mLowColor = typedarray.getColor(R.styleable.TemperatureView_low_color, mLowColor);
@@ -54,11 +52,11 @@ public class TemperatureView extends View {
         mCircleBig= TypedValue.applyDimension(COMPLEX_UNIT_DIP,1,getResources().getDisplayMetrics());
     }
 
-    public TemperatureView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public TemperatureNCView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public TemperatureView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TemperatureNCView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
@@ -130,13 +128,19 @@ public class TemperatureView extends View {
         mPaint.setStyle(Paint.Style.STROKE);
 
         mPaint.setColor(mHightColor); // 17
-        for (int i = 0; i < mTemperatAirCircle; i++) {
-            canvas.drawArc(oval,-226+(i*16),15,false,mPaint);
+
+        canvas.drawArc(oval,-226,91,false,mPaint);
+        if(modelSpeed==ModelSpeed.LOW){
+            mPaint.setAlpha(125);
+            mPaint.setColor(Color.WHITE);
         }
-        mPaint.setColor(mLowColor);
-        for (int i = mTemperatAirCircle; i < 17; i++) {
-            canvas.drawArc(oval,-226+(i*16),15,false,mPaint);
+        canvas.drawArc(oval,-133,91,false,mPaint);
+        if(modelSpeed==ModelSpeed.Mid){
+            mPaint.setAlpha(125);
+            mPaint.setColor(Color.WHITE);
         }
+        canvas.drawArc(oval,-41,91,false,mPaint);
+
 
         mPaint.setColor(Color.WHITE);
         mPaint.setStrokeWidth(mCircleBig);
@@ -150,7 +154,6 @@ public class TemperatureView extends View {
         mPaint.setColor(mHightColor);
         canvas.drawCircle(width/2,width/2,radiusInner, mPaint);
 
-
         int wc =width/2; //中心为止
         radiusInner= (int) (radiusInner-TypedValue.applyDimension(COMPLEX_UNIT_DIP,6,getResources().getDisplayMetrics()));
         // 最内侧绘制的圆
@@ -161,21 +164,8 @@ public class TemperatureView extends View {
         for (int i = 0; i < 180; i++) {
             canvas.drawArc(ovalInner,(i*2),1,false,mPaint);
         }
-        Bitmap bitmap= BitmapFactory.decodeResource(getResources(),mPicState);
-        Rect src=new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-
-        float lastRf=ovalInner.height()/10f; // 将剩余绘制区域分成10等分
-
-        // 测试代码
-//        mPaint.setColor(Color.RED);
-//        canvas.drawCircle(width/2,width/2,ovalInner.width()/2,mPaint);
-
-        RectF dst=new RectF(wc-lastRf/2,ovalInner.top + lastRf/2,wc+lastRf/2,ovalInner.top+lastRf/2*3);
-        // 已经使用了 2份了，还剩余8份未使用  // 绘制图片UI
-        canvas.drawBitmap(bitmap,src,dst,mPaint);
-        Log.e("onDraw",dst.toString());
-        Log.e("onDraw",ovalInner.toString());
 //
+        float lastRf=ovalInner.height()/10f; // 将剩余绘制区域分成10等分
 
         RectF dst2=new RectF(ovalInner.left,ovalInner.top+lastRf/2*3,ovalInner.right,ovalInner.top+lastRf/2*11);
         RectF dst3=new RectF(ovalInner.left,ovalInner.top+lastRf/2*11,ovalInner.right,ovalInner.top+lastRf/2*16);
@@ -196,9 +186,8 @@ public class TemperatureView extends View {
         mPaint.setTextAlign(Paint.Align.CENTER);
         mPaint.setStyle(Paint.Style.FILL);
 //        mPaint.setTextSize(TypedValue.applyDimension(COMPLEX_UNIT_SP,56,getResources().getDisplayMetrics()));
-        RectF dst2Text=new RectF(dst2X.left+lastRf/2f,dst2X.top,dst2X.right-lastRf/2f,dst2X.bottom);
+        RectF dst2Text=new RectF(dst2X.left+lastRf*2f,dst2X.top,dst2X.right-lastRf*2f,dst2X.bottom);
         measureText(canvas,dst2Text,mTemperatAir); //测量温度值的最大尺寸
-//        measureText(canvas,dst2X,mTemperatAir); //测量温度值的最大尺寸
         Paint.FontMetrics fontMetrics=mPaint.getFontMetrics();
         float distance=(fontMetrics.bottom - fontMetrics.top)/2 - fontMetrics.bottom;
         float baseline=dst2.centerY()+distance;
@@ -220,23 +209,6 @@ public class TemperatureView extends View {
         float baselinex=dst3.centerY()+distancex;
         mPaint.setColor(Color.parseColor("#ffffff"));
         canvas.drawText(mTemperatHourse,dst3Other.centerX(),baselinex,mPaint);
-
-        mPaint.setColor(Color.WHITE);
-        mPaint.setStrokeWidth(dst4.height()/3);
-        mPaint.setStyle(Paint.Style.STROKE);
-        RectF ovalInnerLast=new RectF(ovalInner.left, ovalInner.top-lastRf, ovalInner.right, ovalInner.bottom-lastRf);
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-
-
-        canvas.drawArc(ovalInnerLast,97,15,false,mPaint);
-        if(modelSpeed==ModelSpeed.LOW){
-            mPaint.setAlpha(125);
-        }
-        canvas.drawArc(ovalInnerLast,81,15,false,mPaint);
-        if(modelSpeed==ModelSpeed.Mid){
-            mPaint.setAlpha(125);
-        }
-        canvas.drawArc(ovalInnerLast,65,15,false,mPaint);
 
     }
 
@@ -269,7 +241,7 @@ public class TemperatureView extends View {
         try {
             if(mAirTempera>15 && mAirTempera<33){ //这个值才是正常值
                 mAirTp = mAirTempera;
-                mTemperatAir = mAirTp + "°C";
+                mTemperatAir = mAirTp + "";
                 mTemperatAirCircle= (int) (mAirTp-15);
                 invalidate();
             }
@@ -284,7 +256,7 @@ public class TemperatureView extends View {
             float mAirTempera=Float.valueOf(mAirTemper).floatValue();
             if(mAirTempera>15 && mAirTempera<33){ //这个值才是正常值
                 mAirTp = mAirTempera;
-                mTemperatAir = mAirTp + "°C";
+                mTemperatAir = mAirTp + "";
                 mTemperatAirCircle= (int) (mAirTp-15);
                 invalidate();
             }
@@ -326,35 +298,19 @@ public class TemperatureView extends View {
 //        if(this.modelSpeed==modelSpeed){  还是移除掉吧，防止UDP事件不生效
 //            return;
 //        }
-
+        if(modelSpeed==ModelSpeed.LOW){
+            mTemperatAir="低风";
+        }else if(modelSpeed==ModelSpeed.Mid){
+            mTemperatAir="中风";
+        }else if(modelSpeed==ModelSpeed.Quick){
+            mTemperatAir="高风";
+        }
         this.modelSpeed=modelSpeed;
         invalidate();
-//        if(modelSpeed==ModelSpeed.LOW){
-//            mPicState=R.drawable.flag_f1;
-//            invalidate();
-//        }else   if(modelSpeed==ModelSpeed.Mid){
-//            mPicState=R.drawable.flag_leng;
-//            invalidate();
-//        }else   if(modelSpeed==ModelSpeed.Quick){
-//            mPicState=R.drawable.flag_hot;
-//            invalidate();
-//        }
     }
 
-    // 设置制冷制热送风模式
-    public void setModelLHF(ModelHLF modelHLF){
-        if(modelHLF==ModelHLF.SONGFENG){
-            mPicState=R.drawable.flag_f1;
-            invalidate();
-        }else   if(modelHLF==ModelHLF.ZHILENG){
-            mPicState=R.drawable.flag_leng;
-            invalidate();
-        }else   if(modelHLF==ModelHLF.ZHIRE){
-            mPicState=R.drawable.flag_hot;
-            invalidate();
-        }
 
-    }
+
 //    public String mTemperatHourse="室内:28.5°C"; 设置室内温度
     public void setmTemperatHourse(String mTemperatHourse){
         this.mTemperatHourse="室内:"+mTemperatHourse;
