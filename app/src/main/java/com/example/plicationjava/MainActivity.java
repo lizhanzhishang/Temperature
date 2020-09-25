@@ -8,6 +8,7 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
     TemperatureView temperatureview;
     TemperatureNCView newcl;
+    TemperatureDNView temperatdnureview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         temperatureview = findViewById(R.id.temperatureview);
         newcl = findViewById(R.id.newcl);
+        temperatdnureview = findViewById(R.id.temperatdnureview);
+        temperatdnureview.setAirConditionerText("13.5");
     }
 
     public void onZhileng(View view) {
@@ -45,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onAdd(View view) {
-        temperatureview. addAirTip();
+        temperatdnureview. addAirTip();
     }
 
     public void onSub(View view) {
-        temperatureview. subAirTip();
+        temperatdnureview. subAirTip();
     }
 }

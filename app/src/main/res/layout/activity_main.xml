@@ -103,13 +103,14 @@
     </HorizontalScrollView>
 
 
-    <com.example.plicationjava.TemperatureNCView
-        android:id="@+id/newcl"
+    <com.example.plicationjava.TemperatureDNView
+        android:id="@+id/temperatdnureview"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:padding="36dp"
         >
-    </com.example.plicationjava.TemperatureNCView>
+    </com.example.plicationjava.TemperatureDNView>
+
 
     <com.example.plicationjava.TemperatureView
         android:id="@+id/temperatureview"
@@ -119,7 +120,17 @@
         >
     </com.example.plicationjava.TemperatureView>
 
-<!--              分割线                         -->
+
+    <com.example.plicationjava.TemperatureNCView
+        android:id="@+id/newcl"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:padding="36dp"
+        >
+    </com.example.plicationjava.TemperatureNCView>
+
+
+    <!--              分割线                         -->
 
 
 
